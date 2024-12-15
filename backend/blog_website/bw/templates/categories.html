@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="site-section pt-5">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h2 class="mb-4">Category: {{cati.cat}}</h2>
+        </div>
+      </div>
+      <div class="row blog-entries">
+        <div class="col-md-12 col-lg-8 main-content">
+          <div class="row mb-5 mt-5">
+
+            <div class="col-md-12">
+              {% for post in post_cat %}
+              <div class="post-entry-horzontal">
+                <a href="{% url 'blog_page' post.id %}">
+                  <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url({{post.post_img.url}});"></div>
+                  <span class="text">
+                    <div class="post-meta">
+                      <span class="author mr-2"><img src="{{post.aurthor_photo.url}}" alt="Colorlib"> {{post.author_name}}</span>&bullet;
+                      <span class="mr-2">{{post.date}} </span> &bullet;
+                      <span class="mr-2">{{post.Categorie}}</span> &bullet;
+                      <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                    </div>
+                    <h2>{{post.title}}</h2>
+                  </span>
+                </a>
+              </div>
+              {% endfor %}
+              <!-- END post -->
+
+            </div>
+          </div>
+          
+          
+          <div class="row mt-5">
+            <div class="col-md-12 text-center">
+              <nav aria-label="Page navigation" class="text-center">
+                <ul class="pagination">
+                  <li class="page-item  active"><a class="page-link" href="#">&lt;</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#">5</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        {% include "staticParts/sidepar.html" %}
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
