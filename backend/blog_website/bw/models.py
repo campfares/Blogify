@@ -28,7 +28,25 @@ class Post_data(models.Model):
         return self.title
     
 class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
     post_comment = models.ForeignKey(Post_data, related_name= "comments" ,on_delete=models.CASCADE, default='none')
     name = models.CharField(max_length=200 ,default="no name")
     date = models.DateTimeField(auto_now_add=True)
-    comment_content = models.TextField(default="pls be nice")
+    body = models.TextField(default="pls be nice")
+
+    def __str__(self):
+        return self.name
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50,default='annonymus')
+    phone = models.CharField( max_length=11,default='01000000000')
+    email = models.EmailField( max_length=254,default='a@gmail.con')
+    body = models.TextField(default="pls be nice")
+
+class About(models.Model):
+    name = models.CharField(max_length=50)
+    img = models.ImageField(upload_to='about_photos', default='static/images/download.jpg')
+    body = models.TextField()
+
+    def __str__(self):
+        return self.name

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <section class="site-section py-lg">
     <div class="container">
@@ -6,33 +7,33 @@
       <div class="row blog-entries element-animate">
 
         <div class="col-md-12 col-lg-8 main-content">
-          <img src="{{post.post_img.url}}" alt="Image" class="img-fluid mb-5">
+          <img src="{{post_id.post_img.url}}" alt="Image" class="img-fluid mb-5">
            <div class="post-meta">
                       <span class="author mr-2"><img src="images/person_1.jpg" alt="Colorlib" class="mr-2"> Colorlib</span>&bullet;
                       <span class="mr-2">March 15, 2018 </span> &bullet;
                       <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
                     </div>
-          <h1 class="mb-4">{{post.title}}</h1>
+          <h1 class="mb-4">{{post_id.title}}</h1>
           <a class="category mb-5" href="#">Food</a> <a class="category mb-5" href="#">Travel</a>
          
           <div class="post-content-body">
-          <p>{{post.content|slice:"0 :300"}}<p/>
+          <p>{{post_id.content|slice:"0 :300"}}<p/>
           <div class="row mb-5">
             <div class="col-md-12 mb-4">
-              <img src="{{post.content_img.url}}" alt="Image placeholder" class="img-fluid">
+              <img src="{{post_id.content_img.url}}" alt="Image placeholder" class="img-fluid">
             </div>
           </div>
-          <p>{{post.content|slice:"300:"}}</p>
+          <p>{{post_id.content|slice:"300:"}}</p>
           </div>
 
           
           <div class="pt-5">
-            <p>Categories:  <a href="#">{{post.Categorie}} </a>Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
+            <p>Categories:  <a href="#">{{post_id.Categorie}} </a>Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
           </div>
 
 
           <div class="pt-5">
-            <h3 class="mb-5">6 Comments</h3>
+            <h3 class="mb-5">{{comment.count}} Comment{{comment.count|pluralize}}</h3>
             <ul class="comment-list">
               {% if not comment %}
                     <p>no comments yet .....<p/>
@@ -40,13 +41,12 @@
               {% for comment in comment %}
               <li class="comment">
                 <div class="vcard">
-                  <img src="images/person_1.jpg" alt="Image placeholder">
+                  <img src="{% static "images/download.jpg" %}" alt="Image placeholder">
                 </div>
-                
                 <div class="comment-body">
                   <h3>{{comment.name}}</h3>
-                  <div class="meta">January 9, 2018 at 2:21pm</div>
-                  <p>{{ comment.comment_content}}</p>
+                  <div class="meta">{{comment.date}}</div>
+                  <p>{{ comment.body}}</p>
                 </div>
                 
               </li>
@@ -92,42 +92,20 @@
         </div>
       </div>
       <div class="row">
+        {% for post_rel in all_post %}
         <div class="col-md-6 col-lg-4">
-          <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('images/img_2.jpg'); ">
+          <a href="{% url 'blog_page' post_rel.id %}" class="a-block sm d-flex align-items-center height-md" style="background-image: url({{post_rel.post_img.url}}) ">
             <div class="text">
               <div class="post-meta">
-                <span class="category">Lifestyle</span>
-                <span class="mr-2">March 15, 2018 </span> &bullet;
+                <span class="category">{{post_rel.Categorie}}</span>
+                <span class="mr-2">{{post_rel.date}}</span> &bullet;
                 <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
               </div>
-              <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+              <h3>{{post_rel.title}}</h3>
             </div>
           </a>
         </div>
-        <div class="col-md-6 col-lg-4">
-          <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('images/img_3.jpg'); ">
-            <div class="text">
-              <div class="post-meta">
-                <span class="category">Travel</span>
-                <span class="mr-2">March 15, 2018 </span> &bullet;
-                <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-              </div>
-              <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('images/img_4.jpg'); ">
-            <div class="text">
-              <div class="post-meta">
-                <span class="category">Food</span>
-                <span class="mr-2">March 15, 2018 </span> &bullet;
-                <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-              </div>
-              <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-            </div>
-          </a>
-        </div>
+        {% endfor %}
       </div>
     </div>
 
